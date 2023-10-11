@@ -1,47 +1,78 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  
+<v-app>
+  <v-navigation-drawer>
+   
+  <v-list-item-title class="ml-4 mt-2 text-green">My Application Trefle</v-list-item-title>
+  <v-list-item  subtitle="Vue 3"></v-list-item>
+  <v-divider></v-divider>
+  <User v-if="isAuthenticated" ></User>
+  <v-divider></v-divider>
+  <v-list lines="one">
+    <v-list-item v-for="item in navigationList"
+                a:key="item"
+                :to="item.to"> 
+    <v-list-item-title >
+      {{ item.title }}
+    </v-list-item-title>
+  </v-list-item>
+</v-list>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+<v-col>
+  <v-btn v-if="!isAuthenticated && !isLoading" @click="login">Connexion</v-btn>
+  <v-btn v-if="isAuthenticated" @click="logout">Se deconnecter</v-btn>
+</v-col>
+</v-navigation-drawer>
+<v-main>
+  
+  <v-container>
+      <RouterView />
+    </v-container>
+  </v-main>
 
-  <main>
-    <TheWelcome />
-  </main>
+</v-app>
+
 </template>
 
+<script lang="ts">
+import { RouterLink, RouterView } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
+import User from '../src/components/User.vue'; 
+
+export default {
+  components:{ User },
+  setup(){
+      const auth0 = useAuth0();
+      return {
+        isAuthenticated: auth0.isAuthenticated,
+        isLoading: auth0.isLoading,
+        user: auth0.user,
+        login() {
+          console.log('quelque chose')
+          auth0.loginWithRedirect();
+         
+        },
+        logout() {
+          auth0.logout({
+          logoutParams: {
+            returnTo: window.location.origin
+          }
+          });
+        },
+        navigationList :[
+          { title: 'Home', icon: '',to: "/" },
+          { title: 'Profile', icon: '',to: "/Profile"  },
+          { title: 'Favoris', icon: '',to: "/Favoris"  },
+          { title: 'Test', icon: '',to: "/test"  },
+        ],
+        
+      }
+  }
+}
+
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
