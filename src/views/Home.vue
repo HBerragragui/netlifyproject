@@ -22,6 +22,7 @@
                     </v-data-table>       
                 </v-col>
             </v-row>
+           
         </v-container>
     </div>
 </template>
@@ -44,13 +45,21 @@
                     { key: 'action', title: 'Action' },
                 ],
                 s_data : store.data,
+                plantList : localStorage.getItem('localStoragePlantList')
             }
         },
+        mounted(){
+            localStorage.setItem("localStoragePlantList", JSON.stringify(this.s_data));
+            localStorage.setItem("localStorageFavorisList", JSON.stringify([]));
+            
+        },
+        
         methods:{
             goToPageDetail(id){
                 this.getFilterData(id);
                 this.$router.replace('/Details/' + id)
-            }
+            },
+            
         }
     }
 </script>

@@ -12,7 +12,7 @@
             count :  {{ s_count }}
             <v-btn @click="s_increment">+</v-btn>
 
-            data :  {{ s_data }}
+          
         </div>
     </div>
 </template>

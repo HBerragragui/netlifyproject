@@ -15,8 +15,8 @@ app.use(router)
 app.use(vuetify)
 app.use(
     createAuth0({
-      domain: "dev-w0p0na7ozmijvcl5.us.auth0.com",
-      clientId: "sKQguG8GoMM5SjWfKV57myejRCeOLPtP",
+      domain: "dev-lm2esapprbjwdbo0.us.auth0.com",
+      clientId: "FidTHr33RLSX0gqZmm4Yt2ne9TN6ziJo",
       authorizationParams: {
         redirect_uri: window.location.origin,
       }

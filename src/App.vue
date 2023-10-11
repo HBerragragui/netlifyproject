@@ -35,7 +35,7 @@
 
 </template>
 
-<script lang="ts">
+<script>
 import { RouterLink, RouterView } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import User from '../src/components/User.vue'; 
@@ -66,9 +66,21 @@ export default {
           { title: 'Favoris', icon: '',to: "/Favoris"  },
           { title: 'Test', icon: '',to: "/test"  },
         ],
+        plantList:null
         
       }
+  },
+  mounted(){
+            
+           
+           
+        },
+        watch: {
+          plantList(newPlantList) {
+          localStorage.plantList = newPlantList;
+    }
   }
+ 
 }
 
 </script>

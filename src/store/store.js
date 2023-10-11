@@ -6,7 +6,8 @@ export const useStore = defineStore('store', {
     state: () => ({
     count: 0,
     data : fakeData.data,
-    dataDetail : null
+    dataDetail : null,
+    favorisList: []
   }),
 
   getters: {
@@ -25,6 +26,18 @@ export const useStore = defineStore('store', {
         this.dataDetail = this.data.find(d => d.id == id)
         return this.data.find(d => d.id == id)
        
+    },
+    sendToFavoris(plant){
+      this.favorisList.push(plant)
+      
+    },
+    
+    removeToFavoris(plant){
+      const objWithIdIndex = this.favorisList.findIndex((obj) => obj.id === plant.id);
+      this.favorisList.splice(objWithIdIndex, 1);
+
+      return this.favorisList;
+
     }
     
   },
